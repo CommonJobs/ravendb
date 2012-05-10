@@ -26,16 +26,6 @@ namespace Raven.Database.Server.Responders
 
 		public override void Respond(IHttpContext context)
 		{
-			if (context.User.IsAdministrator() == false)
-			{
-				context.SetStatusToUnauthorized();
-				context.WriteJson(new
-				{
-					Error = "Only administrators can initiate a backup procedure"
-				});
-			    return;
-			}
-
 			var backupRequest = context.ReadJsonObject<BackupRequest>();
 			var incrementalString = context.Request.QueryString["incremental"];
 			bool incrementalBackup;
